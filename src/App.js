@@ -11,12 +11,22 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello");
+    if (!name) {
+      //show danger alert
+    } else if (isEditing) {
+      // deal with edit
+    } else {
+      // show succeded alert
+      const newItem = { id: new Date().getTime().toString(), title: name };
+      setList([...list, newItem]); // add what is exists and add the new item
+      setName([]); // clear the field
+    }
   };
 
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
+        {/* Show alert is alert is true */}
         {alert.show && <Alert />}
         <h3>grocery bud</h3>
         <div className="form-control">
@@ -32,10 +42,13 @@ function App() {
           </button>
         </div>
       </form>
-      <div className="grocery-container">
-        <List />
-        <button className="clear-btn">Clear items</button>
-      </div>
+      {/* Show List only if there are added items */}
+      {list.length > 0 && (
+        <div className="grocery-container">
+          <List items={list} />
+          <button className="clear-btn">Clear items</button>
+        </div>
+      )}
     </section>
   );
 }
