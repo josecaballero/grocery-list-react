@@ -36,15 +36,19 @@ function App() {
 
   const clearItems = () => {
     showAlert(true, "success", "list cleared");
-
     setList([]);
+  };
+
+  const removeItem = (id) => {
+    showAlert(true, "danger", "item removed");
+    setList(list.filter((item) => item.id !== id));
   };
 
   return (
     <section className="section-center">
       <form className="grocery-form" onSubmit={handleSubmit}>
         {/* Show alert is alert is true */}
-        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
         <h3>grocery bud</h3>
         <div className="form-control">
           <input
@@ -62,7 +66,7 @@ function App() {
       {/* Show List only if there are added items */}
       {list.length > 0 && (
         <div className="grocery-container">
-          <List items={list} />
+          <List items={list} removeItem={removeItem} />
           <button type="button" className="clear-btn" onClick={clearItems}>
             Clear items
           </button>
